@@ -3,12 +3,6 @@
 
 ## 开源不易
 
-
-
-​                
-
-老板打赏<img src="https://gitee.com/qi_jianchun/midjourney-bot-api/raw/master/source/%E8%B5%9E%E8%B5%8F%E7%A0%81.jpg" alt="赞赏码" style="zoom:10%;" />
-
 ## 项目背景介绍
 
 ### 需求产生

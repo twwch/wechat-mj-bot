@@ -1,0 +1,21 @@
+server:
+  port: 80
+
+discord:
+  user-token: 'xxx.G9LuZ5.9gPeHOdOOX1zr3R8qizJdcJORwH3zpGKKdKS3c'
+  bot-token: 'xxx.GvtJEy.b2mnGt3MTajNv3cBcl4riy3Csq3bDZ8dyClICI'
+  server-id: 'xxx'
+  channel-id: 'xxx'
+call-back:
+  url: 'http://localhost:80/test/callback'
+
+chatgpt:
+  token: 'sk-xx'
+
+wechat:
+  token: 'xx'
+  app_id: 'xx'
+  app_secret: 'xx'
+
+
+
