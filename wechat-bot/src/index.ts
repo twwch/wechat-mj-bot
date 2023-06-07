@@ -6,8 +6,7 @@ import {
 } from 'wechaty'
 
 import qrTerm from 'qrcode-terminal'
-import {FileBox} from 'file-box'
-import {ChatCompletion, Midjourney} from './utils'
+import {ChatCompletionV2, Midjourney} from './utils'
 import {start} from "./server";
 const options = {
     name: 'chat-bot',
@@ -92,7 +91,7 @@ async function onMessage(msg: Message) {
 
     if (type_for_chat === '/chat') {
         text = text.replace('/chat', '')
-        const res = await ChatCompletion(text)
+        const res = await ChatCompletionV2(text)
         console.info(res)
         await msg.say(res || '我不知道你在说什么')
         return
