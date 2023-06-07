@@ -1,6 +1,4 @@
-/**
- * @author 明明不是下雨天
- */
+
 package com.chtw.midjourney.controller;
 
 import lombok.Data;

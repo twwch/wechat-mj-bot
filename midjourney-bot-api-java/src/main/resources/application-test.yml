@@ -16,6 +16,13 @@ wechat:
   token: 'xx'
   app_id: 'xx'
   app_secret: 'xx'
+  send_msg_url: ''
+
+# mongo
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/midjouney
 
 
 

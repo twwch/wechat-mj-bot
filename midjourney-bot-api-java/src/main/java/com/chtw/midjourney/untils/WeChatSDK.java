@@ -44,9 +44,10 @@ public class WeChatSDK {
     // 获取 access_token
     private String getAccessToken() {
         // todo save access_token to redis
-        String res = webClient.get().uri("/cgi-bin/token?grant_type=client_credential&appid={appid}&secret={secret}", appId, appSecret)
-                .retrieve().bodyToMono(String.class).block();
-        return string2Json(res).getString("access_token");
+        JSONObject res = webClient.get().uri("/cgi-bin/token?grant_type=client_credential&appid={appid}&secret={secret}", appId, appSecret)
+                .retrieve().bodyToMono(JSONObject.class).block();
+        assert res != null;
+        return res.getString("access_token");
     }
 
     // send message
@@ -60,10 +61,8 @@ public class WeChatSDK {
         JSONObject text = new JSONObject();
         text.put("content", content);
         json.put("text", text);
-        String url = String.format("/cgi-bin/message/custom/send?access_token=%s", getAccessToken());
-        String res = webClient.post().uri(url)
-                .bodyValue(json.toJSONString()).retrieve().bodyToMono(String.class).block();
-        return string2Json(res);
+        return webClient.post().uri("/cgi-bin/message/custom/send?access_token=%s", getAccessToken())
+                .bodyValue(json.toJSONString()).retrieve().bodyToMono(JSONObject.class).block();
     }
 
     // send image message
@@ -77,9 +76,8 @@ public class WeChatSDK {
         JSONObject image = new JSONObject();
         image.put("media_id", mediaId);
         json.put("image", image);
-        String res = webClient.post().uri("/cgi-bin/message/custom/send?access_token={access_token}", getAccessToken())
-                .bodyValue(json.toJSONString()).retrieve().bodyToMono(String.class).block();
-        return string2Json(res);
+        return webClient.post().uri("/cgi-bin/message/custom/send?access_token={access_token}", getAccessToken())
+                .bodyValue(json.toJSONString()).retrieve().bodyToMono(JSONObject.class).block();
     }
 
     // send menu message
@@ -95,9 +93,8 @@ public class WeChatSDK {
         msgmenu.put("head_content", head_content);
         msgmenu.put("list", menu_list);
         json.put("msgmenu", msgmenu);
-        String res = webClient.post().uri("/cgi-bin/message/custom/send?access_token={access_token}", getAccessToken())
-                .bodyValue(json.toJSONString()).retrieve().bodyToMono(String.class).block();
-        return string2Json(res);
+        return webClient.post().uri("/cgi-bin/message/custom/send?access_token={access_token}", getAccessToken())
+                .bodyValue(json.toJSONString()).retrieve().bodyToMono(JSONObject.class).block();
     }
 
     // 素材上传

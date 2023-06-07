@@ -12,5 +12,13 @@ call-back:
 chatgpt:
   token: '用户token  chagpt的可以不填写'
 
+wechat:
+  token: 'gHKLFDFhahdkllsfjjshfkk'
+  app_id: 'wxa06a131b64702c92'
+  app_secret: '457dcc60e0c73ff48ef2eef52421bb1d'
 
-
+# mongo
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/midjouney

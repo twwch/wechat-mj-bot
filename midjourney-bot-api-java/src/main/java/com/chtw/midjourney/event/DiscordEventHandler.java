@@ -116,7 +116,7 @@ public class DiscordEventHandler extends ListenerAdapter {
         String fileName = attachment.getFileName();
         String[] keys = fileName.split("_", -1);
 
-        com.alibaba.fastjson.JSONObject jsonObject =new JSONObject();
+        com.alibaba.fastjson.JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", attachment.getId());
         jsonObject.put("url", attachment.getUrl());
         jsonObject.put("proxyUrl", attachment.getProxyUrl());
@@ -126,26 +126,29 @@ public class DiscordEventHandler extends ListenerAdapter {
         jsonObject.put("size", attachment.getSize());
         jsonObject.put("height", attachment.getHeight());
         jsonObject.put("width", attachment.getWidth());
+        jsonObject.put("isImage", attachment.isImage());
 
         String images = keys[keys.length - 1];
         String msgHash = images.split("\\.")[0];
-        jsonObject.put("msgHash",msgHash);
+        jsonObject.put("msgHash", msgHash);
 
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime time = LocalDateTime.now();
         String localTime = df.format(time);
-        jsonObject.put("date",localTime);
+        jsonObject.put("date", localTime);
 
         //拼接路径，数据库中可以直接保存该路径，返回前端，前端即可访问
-        log.info("MessageMetadataRegistry:"+jsonObject.toJSONString());
+        log.info("MessageMetadataRegistry:" + jsonObject.toJSONString());
         Map<String, Object> body = new HashMap<>();
         body.put("discord", jsonObject);
         body.put("type", Scene.GENERATE_END);
+        content = content.replaceAll("<@\\d+>", "").trim();
         body.put("content", content);
         request(body);
     }
 
     private void trigger(String content, Scene scene) {
+        content = content.replaceAll("<@\\d+>", "").trim();
         Map<String, Object> body = new HashMap<>();
         body.put("content", content);
         body.put("type", scene);
