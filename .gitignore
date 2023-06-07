@@ -43,5 +43,6 @@ HELP.md
 LICENSE
 
 wechat-bot/node_modules
+wechat-bot/chat-bot.memory-card.json
 midjourney-bot-api-java/target
 midjourney-bot-api-java/src/main/resources/application.yml
