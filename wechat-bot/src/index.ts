@@ -8,6 +8,7 @@ import {
 import qrTerm from 'qrcode-terminal'
 import {ChatCompletionV2, Midjourney} from './utils'
 import {start} from "./server";
+
 const options = {
     name: 'chat-bot',
 }
@@ -93,10 +94,10 @@ async function onMessage(msg: Message) {
         text = text.replace('/chat', '')
         const res = await ChatCompletionV2(text)
         console.info(res)
-        await msg.say(res || '我不知道你在说什么')
+        const resp = `${text}\n=================\n\n${res || '我不知道你在说什么'}`
+        await msg.say(resp)
         return
     }
-
 
 
     if (type_for_chat === '/imagine') {
