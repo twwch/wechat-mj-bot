@@ -1,3 +1,6 @@
 Flask==2.2.2
 requests==2.28.1
 Pillow
+qq-botpy
+pymongo
+flask_core
