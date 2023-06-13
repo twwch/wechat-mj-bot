@@ -50,7 +50,7 @@ public class DiscordEventHandler extends ListenerAdapter {
 
         for (Message.Attachment attachment : message.getAttachments()) {
             if (attachment.isImage()) {
-                replay(attachment, message.getContentRaw());
+                replay(attachment, message.getContentRaw(), message.getId());
                 return;
             }
         }
@@ -72,7 +72,7 @@ public class DiscordEventHandler extends ListenerAdapter {
         }
     }
 
-    private void replay(Message.Attachment attachment, String content) {
+    private void replay(Message.Attachment attachment, String content, String messageId) {
         /*  //获取服务器（公会）信息
         Guild guild = message.getGuild();
         String guildId = guild.getId();
@@ -127,6 +127,7 @@ public class DiscordEventHandler extends ListenerAdapter {
         jsonObject.put("height", attachment.getHeight());
         jsonObject.put("width", attachment.getWidth());
         jsonObject.put("isImage", attachment.isImage());
+        jsonObject.put("messageId", messageId);
 
         String images = keys[keys.length - 1];
         String msgHash = images.split("\\.")[0];
