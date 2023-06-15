@@ -67,7 +67,7 @@ class MyClient(botpy.Client):
                 await message.reply(content="请输入聊天内容", message_reference={"message_id": message_id})
                 return
             response = openai.ChatCompletion.create(
-                engine="gpt-35-turbo",  # The deployment name you chose when you deployed the ChatGPT or GPT-4 model.
+                model="gpt-3.5-turbo-0613",
                 messages=[
                     {"role": "system", "content": "Assistant is a large language model trained by OpenAI."},
                     {"role": "user", "content": prompt},
