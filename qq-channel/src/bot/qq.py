@@ -1,5 +1,6 @@
 import botpy
 from botpy.message import Message
+import openai
 
 from bot.mdb import QQ_MESSAGE_TABLE
 from bot.midjourney import MidjourneyAPI
@@ -59,6 +60,23 @@ class MyClient(botpy.Client):
 
         content = message.content
         prompt = content.replace(BOOT_AT_TEXT, "").strip()
+
+        if content.startswith(BOOT_AT_TEXT) and '/会话' in content:
+            prompt = prompt.replace("/会话", "").strip()
+            if not prompt:
+                await message.reply(content="请输入聊天内容", message_reference={"message_id": message_id})
+                return
+            response = openai.ChatCompletion.create(
+                engine="gpt-35-turbo",  # The deployment name you chose when you deployed the ChatGPT or GPT-4 model.
+                messages=[
+                    {"role": "system", "content": "Assistant is a large language model trained by OpenAI."},
+                    {"role": "user", "content": prompt},
+                ]
+            )
+            await message.reply(content=response['choices'][0]['message']['content'],
+                                message_reference={"message_id": message_id})
+            return
+
         if content.startswith(BOOT_AT_TEXT) and '/绘图' in content:
             prompt = prompt.replace("/绘图", "").strip()
             mj_sdk.create_imagine(prompt=prompt, message_id=message_id)
