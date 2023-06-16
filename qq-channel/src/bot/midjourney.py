@@ -18,7 +18,7 @@ class MidjourneyAPI(object):
             "channel_id": MIDJOURNEY_CONF["channel_id"],
             "session_id": MIDJOURNEY_CONF["session_id"],
             'data': {
-                'version': '1077969938624553050',
+                'version': '1118961510123847772',
                 'id': '938956540159881230',
                 'name': 'imagine',
                 'type': 1,
@@ -27,6 +27,7 @@ class MidjourneyAPI(object):
             }
         }
         retry = 3
+        text = ""
         while retry > 0:
             retry -= 1
             r = requests.post(
@@ -34,7 +35,8 @@ class MidjourneyAPI(object):
             print(r.text)
             if r.status_code == 204:
                 return True
-        return False
+            text = r.text
+        return text
 
     def up_imagine(self, mj_message_id, custom_id):
         payload = {
@@ -50,6 +52,7 @@ class MidjourneyAPI(object):
             }
         }
         retry = 3
+        text = ""
         while retry > 0:
             retry -= 1
             r = requests.post(
@@ -57,4 +60,5 @@ class MidjourneyAPI(object):
             print(r.text, payload)
             if r.status_code == 204:
                 return True
-        return False
+            text = r.text
+        return text

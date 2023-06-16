@@ -79,9 +79,12 @@ class MyClient(botpy.Client):
 
         if content.startswith(BOOT_AT_TEXT) and '/绘图' in content:
             prompt = prompt.replace("/绘图", "").strip()
-            mj_sdk.create_imagine(prompt=prompt, message_id=message_id)
-            await message.reply(content=f"排队中了~\n任务ID: {message_id}",
-                                message_reference={"message_id": message_id})
+            res = mj_sdk.create_imagine(prompt=prompt, message_id=message_id)
+            if res and isinstance(res, bool):
+                await message.reply(content=f"排队中了~\n任务ID: {message_id}",
+                                    message_reference={"message_id": message_id})
+                return
+            await message.reply(content=res, message_reference={"message_id": message_id})
             return
 
         message_reference_id = message.message_reference.message_id
@@ -110,9 +113,12 @@ class MyClient(botpy.Client):
                 await message.reply(content=f"存在异常\n任务ID: {message_id} \ncustom_id生成失败",
                                     message_reference={"message_id": message_id})
                 return
-            mj_sdk.up_imagine(mj_message_id=mj_message.get("messageId"), custom_id=custom_id)
-            await message.reply(content=f"排队中了~\n任务ID: {message_id}",
-                                message_reference={"message_id": message_id})
+            res = mj_sdk.up_imagine(mj_message_id=mj_message.get("messageId"), custom_id=custom_id)
+            if res and isinstance(res, bool):
+                await message.reply(content=f"排队中了~\n任务ID: {message_id}",
+                                    message_reference={"message_id": message_id})
+                return
+            await message.reply(content=res, message_reference={"message_id": message_id})
             return
         await message.reply(content=f"不支持的命令\n支持的命令: {','.join(SUPPORT_COMMANDS)}",
                             message_reference={"message_id": message_id})
